@@ -37,6 +37,6 @@ func handler(numbers []int) func(http.ResponseWriter, *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
-		json.NewEncoder(w).Encode(map[string]interface{}{"Numbers": numbers})
+		json.NewEncoder(w).Encode(map[string]interface{}{"numbers": numbers})
 	}
 }
