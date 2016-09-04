@@ -42,6 +42,8 @@ func CalculateNumbersFeed(w http.ResponseWriter, r *http.Request) {
 
 	// Output numbers
 	dtoNums := numbers.ConvertToTransfer()
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(dtoNums)
 
 }
