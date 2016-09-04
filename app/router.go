@@ -5,7 +5,10 @@ import (
 	"net/http"
 )
 
-func RegisterRoutes() {
+func Handlers() *http.ServeMux {
 	// Register application routes and corresponding services
-	http.HandleFunc("/numbers", service.CalculateNumbersFeed)
+	routes := http.NewServeMux()
+	routes.HandleFunc("/numbers", service.CalculateNumbersFeed)
+
+	return routes
 }

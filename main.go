@@ -7,7 +7,5 @@ import (
 )
 
 func main() {
-	app.RegisterRoutes()
-
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", app.Handlers()))
 }

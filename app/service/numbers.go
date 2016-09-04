@@ -34,7 +34,7 @@ func CalculateNumbersFeed(w http.ResponseWriter, r *http.Request) {
 	for _, feedUrl := range urls {
 		go func(feedUrl string, numbers *domain.Numbers) {
 			defer wg.Done()
-			processFeed(feedUrl, numbers)
+			processFeedUrl(feedUrl, numbers)
 		}(feedUrl, &numbers)
 
 	}
@@ -48,7 +48,7 @@ func CalculateNumbersFeed(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func processFeed(feedUrl string, numbers *domain.Numbers) {
+func processFeedUrl(feedUrl string, numbers *domain.Numbers) {
 	feed := dto.Numbers{}
 
 	// Validate url format
@@ -59,7 +59,7 @@ func processFeed(feedUrl string, numbers *domain.Numbers) {
 	}
 
 	// Receive numbers feed
-	err := getJson(feedUrl, &feed)
+	err := requestNumbers(feedUrl, &feed)
 	if err != nil {
 		err := errors.New(fmt.Sprintf("Failed to receive feed, url: '%s', error: '%s'", feedUrl, err))
 		log.Printf("%s", err)
@@ -73,7 +73,7 @@ func processFeed(feedUrl string, numbers *domain.Numbers) {
 }
 
 // Get content of url into predefined struct
-func getJson(url string, target interface{}) error {
+func requestNumbers(url string, target interface{}) error {
 	// Init client
 	timeout := time.Duration(time.Duration(feedTimeout) * time.Millisecond)
 	c := http.Client{
